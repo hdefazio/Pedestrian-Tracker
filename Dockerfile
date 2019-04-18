@@ -1,3 +1,4 @@
+#Dockerfile to build OpenVino
 FROM ubuntu:16.04
 
 ADD . /openvino/
