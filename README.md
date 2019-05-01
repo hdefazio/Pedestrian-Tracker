@@ -1,3 +1,9 @@
+# Updates
+
+The Dockerfile sets up an OpenVino environment. 
+
+The detection threshold can now be set with -d_thr, input_h is set with -in_h, and input_w is set with -in_w. All are optional and have default values set.
+
 # Pedestrian Tracker Demo
 
 This demo showcases Pedestrian Tracking scenario: it reads frames from an input video sequence, detects pedestrians in the frames, and builds trajectories of movement of the pedestrians in
