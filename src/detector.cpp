@@ -1,11 +1,8 @@
-// Copyright (C) 2018 Intel Corporation
-// SPDX-License-Identifier: Apache-2.0
-//
-
 #include "detector.hpp"
 
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <map>
 #include <opencv2/core/core.hpp>
@@ -157,6 +154,8 @@ void ObjectDetector::fetchResults() {
     results_fetched_ = true;
     const float *data = request->GetBlob(output_name_)->buffer().as<float *>();
 
+    std::ofstream output;
+    output.open("/outputopenvino.txt", std::ios_base::app);
     for (int det_id = 0; det_id < max_detections_count_; ++det_id) {
         const int start_pos = det_id * object_size_;
 
@@ -188,6 +187,13 @@ void ObjectDetector::fetchResults() {
 
         if (object.confidence > config_.detector_threshold && object.rect.area() > 0) {
             results_.emplace_back(object);
+	    output << object.object_id << " " 
+	           << object.frame_idx << " " 
+		   << object.rect.tl().x << " " 
+		   << object.rect.tl().y << " " 
+		   << object.rect.br().x << " " 
+		   << object.rect.br().y << " " 
+		   << object.confidence << "\n";
         }
     }
 }
